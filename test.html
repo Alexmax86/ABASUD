@@ -1,0 +1,55 @@
+<html>
+    <body>
+
+    </body>
+</html>
+
+<script>
+    if (confirm('Are you sure you want to save this thing into the database?')) {
+  // Save it!
+  console.log('Thing was saved to the database.');
+} else {
+  // Do nothing!
+  console.log('Thing was not saved to the database.');
+}
+    function billingRuleSelector({appendTo}){
+  let selector = document.createElement('select')      //////////////////SELECT BOX for patient
+  selector.id = 'billingRuleSelector';
+  
+  var placeholder = document.createElement('option');       ////placeholder
+  placeholder.textContent = '---'
+  placeholder.value = "" 
+  selector.appendChild(placeholder)
+
+  for(var x = 0; x < billingRules.length; x++) {             ////populate selectbox function
+      var opt = billingRules[x];
+      var el = document.createElement("option");
+      el.textContent = opt;
+      el.value = opt;
+      selector.appendChild(el);
+  }      
+
+  selector.style.width = '20%'
+  appendTo.appendChild(selector);
+
+  this.selection = function(){
+    let val = selector.selectedIndex
+    if (val == 0){return}
+    if (val > 0){val -= 1}
+    console.log("returning " + selector.value)
+    return selector.options[selector.selectedIndex].text
+  }
+
+}
+
+let billingRules = ["full", "split"]
+let selector = new billingRuleSelector({appendTo: document.body})
+let button = document.createElement("button");
+document.body.appendChild(button)
+button.innerHTML = "aaaaaaaaahhh"
+button.addEventListener('click', function(){
+    console.log("call")
+    console.log(selector.selection())
+})
+
+</script>

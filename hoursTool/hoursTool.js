@@ -25,32 +25,27 @@ function addHours() {
 
             var patientLab = document.createElement("Label");
             patientLab.setAttribute("for", 'selectPatient');
-            patientLab.innerHTML = "Seleziona paziente ";
+            patientLab.innerHTML = "Seleziona paziente: ";
+            patientLab.style.marginLeft = "20px"
             form.appendChild(patientLab);
+            
+            
+            
+            let patientSelector1 = new patientSelector({appendTo: form});
 
+            var bsLabel = document.createElement("Label");
+            bsLabel.setAttribute("for", 'billingSelector');
+            bsLabel.innerHTML = "Seleziona regola: ";
+            bsLabel.style.mar
+            
+            form.appendChild(bsLabel);
+            
+            let billingSelector = new billingRuleSelector({appendTo: form, operator: operatorList[i]})
+           
             
 
-            let selectPatient = document.createElement('select')      //////////////////SELECT BOX for patient
-            selectPatient.id = 'selectPatient';
-            
-            var placeholder = document.createElement('option');       ////placeholder
-            placeholder.textContent = '---'
-            placeholder.value = "" 
-            selectPatient.appendChild(placeholder)
 
-            for(var x = 0; x < patientList.length; x++) {             ////populate selectbox function
-                var opt = patientList[x].name;
-                var el = document.createElement("option");
-                el.textContent = opt;
-                el.value = opt;
-                selectPatient.appendChild(el);
-            }
-            
-                
-          
-            selectPatient.style.width = '20%'
-            form.appendChild(selectPatient);
-            
+            ///////////////////patientSelector            
                     
 
             var addButton = document.createElement('button');       //Creates add patient button and callback
@@ -66,10 +61,8 @@ function addHours() {
             
 
             form.addEventListener('submit', function(){
-              let val = selectPatient.selectedIndex
-              if (val == 0){return}
-              if (val > 0){val -= 1}
-              operatorList[i].addBill({patient: patientList[val], hours: oreTextBox.value, rate: operatorList[i].rate})
+              console.log(billingSelector.selection)
+              operatorList[i].addBill({patient: patientSelector1.selection(), hours: oreTextBox.value, rate: operatorList[i].rate, rule: billingSelector.selection()})
               tabellaOraria.refresh()
               //tabellaOraria.addRow({paziente:patientList[val], ore:'22', tariffa:'13' })          
             })

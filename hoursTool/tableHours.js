@@ -9,16 +9,32 @@ function tableHours({appendTo, operator}) {
         var row = header.insertRow(0);
         var nameH = row.insertCell(-1); nameH.innerHTML = "Nome paziente"; 
         var hoursH = row.insertCell(-1); hoursH.innerHTML = "Numero ore";
-        var billingH = row.insertCell(-1); billingH.innerHTML = "Tariffa h";  
+        var billingH = row.insertCell(-1); billingH.innerHTML = "Tariffa h";
+        var ruleH = row.insertCell(-1); ruleH.innerHTML = "Regola";        
+        var cancel = row.insertCell(-1); 
         // tab.style.display = 'none'
         appendTo.appendChild(tab)   
     }    
 
-    this.addRow = function({patient, hours, rate}) {        
+    this.addRow = function({patient, hours, rate, rule}) {        
         let newRow = tab.insertRow(-1);
         let cellPaz = newRow.insertCell(-1); cellPaz.innerHTML = patient
         let cellOre = newRow.insertCell(-1); cellOre.innerHTML = hours
-        let cellTar = newRow.insertCell(-1); cellTar.innerHTML = rate    
+        let cellTar = newRow.insertCell(-1); cellTar.innerHTML = rate
+        let cellRule = newRow.insertCell(-1); cellRule.innerHTML = rule
+        var cellCancel = newRow.insertCell(-1); 
+        
+        let cancelButton = document.createElement("button");
+        cancelButton.style.backgroundColor = "red"
+        cancelButton.innerHTML = "X"
+        cellCancel.appendChild(cancelButton)
+        
+        cancelButton.addEventListener('click', function(){
+            tab.deleteRow(newRow.rowIndex);
+            operator.billedHours.splice(newRow.rowIndex - 1, 1)
+        })
+        
+        
     }
 
     this.refresh = function(){       
@@ -27,7 +43,7 @@ function tableHours({appendTo, operator}) {
             }
         this.header();
         operator.billedHours.forEach(function (element, index) {
-            self.addRow({patient: element.patient.name, hours: element.hours, rate: operator.rate})
+            self.addRow({patient: element.patient.name, hours: element.hours, rate: operator.rate, rule: element.rule})             //////aggiungere argomento rule
         })
     }
 
