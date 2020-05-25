@@ -1,0 +1,389 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+    <style>  
+                    .sidenav {
+                height: 100%; /* Full-height: remove this if you want "auto" height */
+                width: 260px; /* Set the width of the sidebar */
+                position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+                z-index: 1; /* Stay on top */
+                top: 0; /* Stay at the top */
+                left: 0;
+                background-color: #3A3F42; /* Black */
+                overflow-x: hidden; /* Disable horizontal scroll */
+                padding-top: 20px;
+              }
+
+              /* The navigation menu links */
+              .sidenav a {
+                padding: 6px 8px 6px 16px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+                border: solid 2px black;
+                margin-top: 3px;
+                margin-bottom: 3px;
+              }
+
+              button{
+                border: 1px solid transparent;
+                background-color: DodgerBlue;
+                color: #fff;
+                cursor: pointer;
+                font-size: 90%;
+                margin-left: 1%;
+                
+              }
+
+              .collapContent {
+                padding: 0 18px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.2s ease-out;
+                background-color: #f1f1f1;
+                
+              }
+
+              .collapsible {
+                background-color:grey;
+                color: white;
+                cursor: pointer;
+                padding: 18px;
+                width: 100%;
+                border: solid 1px black;
+                margin-bottom: 2px;
+                text-align: left;
+                outline: none;
+                font-size: 25px;
+                margin-left: 0px;
+                
+              }
+              
+              .active, .collapsible:hover {
+                background-color: #555;
+              }
+
+              .collapsible:after {
+                content: '\02795'; /* Unicode character for "plus" sign (+) */
+                font-size: 13px;
+                color: white;
+                float: right;
+                margin-left: 5px;
+              }
+
+              .active:after {
+                content: "\2796"; /* Unicode character for "minus" sign (-) */
+              }
+
+              /* When you mouse over the navigation links, change their color */
+              .sidenav a:hover {
+                color: #f1f1f1;
+              }
+
+              /* Style page content */
+              #main {
+                margin-left: 260px; /* Same as the width of the sidebar */
+                height: 100%;
+                font-size: 250%;
+                background-color:rgb(226, 240, 255);
+
+
+                
+              }
+
+              /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+              @media screen and (max-height: 450px) {
+                .sidenav {padding-top: 15px;}
+                .sidenav a {font-size: 18px;}
+              }
+
+              input[type=text], select {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                font-size: 70%;
+              }
+
+              table {
+                font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+              }
+
+              td, th {
+                border: 1px solid #ddd;
+                padding: 8px;
+              }
+     
+    </style>
+  
+  
+  <body>
+    <div class="sidenav">
+      <a href="#" onclick="addHours()">Aggiungi ore</a>
+      <a href="#">Aggiungi spese</a>
+      <a href="#" onclick="loadPatientsTool()">Strumento pazienti</a>
+      <a href="#" onclick="finalReckon()">Calcolo finale</a>
+      <a href="#" onclick="settings()">Impostazioni</a>
+    </div>
+    
+    <!-- Page content -->
+    <div id="main">
+      
+     
+    </div>
+  
+    
+  </body>
+</html>
+
+<script>
+/////////////////////////////////////////////////////////////////////////////////////////LOGICA/////////////////////////////////////////////////////////////////////////////////
+    function Operator(name) {
+        this.name = name;
+        this.hours = [];
+        this.billing = 20;
+        this.billingRule = undefined;
+        operatorList.push(this);
+
+    }
+
+
+
+    function Patient(name) {
+        this.name = name;
+        //this.hours = {}
+    }
+
+    let operatorList = []
+    let patientList = [{name: 'asd'}, {name: 'beee'}, {name: 'cacaca'}]
+
+
+    
+
+    let Ciccio = new Operator ('Ciccio');
+    let second = new Operator ('Chiara');
+    let firstPatient = new Patient('Aldo');
+    let secondPatient = new Patient('Peppe');
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////USER INTERFACE////////////////////////////////////////////////////////////////////////////////
+    var mainPage = document.getElementById('main');     
+    function wipeMain(){
+      while (mainPage.lastElementChild) {                     //Wipeouts mainPage
+        mainPage.removeChild(mainPage.lastElementChild);
+      }
+
+    }
+
+    ///////////////////////////////PATIENTS TOOL
+    function loadPatientsTool(){     
+      
+                        wipeMain();
+                        
+                        
+                        var form = document.createElement('form')
+                        mainPage.appendChild(form)
+
+                        var textBox = document.createElement('input')           //Creates input textbox
+                          textBox.setAttribute('type', 'text')
+                          textBox.style.width = '50%'
+                          textBox.style.marginLeft = '20px'    
+                          form.appendChild(textBox);
+
+
+                        var addButton = document.createElement('button');       //Creates add patient button and callback
+                          addButton.setAttribute = 'type', 'submit'
+                          addButton.innerHTML = 'Aggiungi'
+                          form.appendChild(addButton); 
+                          
+                        form.addEventListener('submit', function(){
+                          if (textBox.value != ""){
+                            patientList.push({name: textBox.value})};
+                          updateTable();
+                          textBox.value = "";          
+                            })
+
+                        var patientsTable = document.createElement('table');    //Creates table of patients based on patientList[]
+                        patientsTable.style.border = '2px solid black'
+                        mainPage.appendChild(patientsTable);
+                        updateTable();
+                        
+      
+      
+    function updateTable(){                                //UpdateTable function
+                        while(patientsTable.rows.length > 0) {
+                        patientsTable.deleteRow(0);
+                        }
+                        
+                        patientList.forEach(function (item, index){
+                          console.clear;
+                          console.log('Item numero: ' + index)
+                          var row = patientsTable.insertRow(-1);
+                          
+
+                          var cellName = row.insertCell(0)          
+                          cellName.innerHTML = item.name
+                          
+
+                          var cellDelete = row.insertCell(1)
+                          
+                          
+                          var btnDel = document.createElement('button');      
+                          btnDel.innerHTML = 'Delete';      
+                          cellDelete.appendChild(btnDel);
+                          btnDel.onclick = (function(){
+                            patientList.splice(row.rowIndex, 1);
+                            patientsTable.deleteRow(row.rowIndex);
+                            
+                          
+                          })                        
+
+                        
+                        })}                   
+      
+
+      
+    
+    }
+    ////////////////////////////////////////////////////////ADD HOURS TOOL
+    function addHours(){
+      wipeMain();
+      
+      for (let i = 0; i < operatorList.length; i++){  
+          let collap = document.createElement ('button');        //////////creates collapsible button CLASS: collapsible          
+              collap.className = 'collapsible'
+              collap.innerHTML = operatorList[i].name;
+              main.appendChild(collap)
+
+          let content = document.createElement('div');            //////////creates content div for every operator, CLASS: collapContent
+              content.className = 'collapContent';
+              main.appendChild(content);
+          
+          
+          let form = document.createElement('form');      
+              form.setAttribute('autocomplete', 'off');
+              content.appendChild(form);
+
+          var oreLabel = document.createElement("Label");
+              oreLabel.setAttribute("for", 'oreTextBox');
+              oreLabel.innerHTML = "Numero di ore: ";
+              form.appendChild(oreLabel);
+
+          let oreTextBox = document.createElement('input')
+              oreTextBox.id = 'oreTextBox'
+              oreTextBox.setAttribute('type', 'text')
+              oreTextBox.style.width = '7%'
+              form.appendChild(oreTextBox);
+
+          var patientLab = document.createElement("Label");
+              patientLab.setAttribute("for", 'selectPatient');
+              patientLab.innerHTML = "Seleziona paziente ";
+              form.appendChild(patientLab);
+
+                   
+          let selectPatient = document.createElement('select')      //////////////////SELECT BOX for patient
+              selectPatient.id = 'selectPatient';
+          
+                    var placeholder = document.createElement('option');                               ////placeholder
+                        placeholder.textContent = '---'
+                        placeholder.value = "" 
+                        selectPatient.appendChild(placeholder)
+
+                    for(var x = 0; x < patientList.length; x++) {                                     ////populate selectbox function
+                        var opt = patientList[x].name;
+                        var el = document.createElement("option");
+                        el.textContent = opt;
+                        el.value = opt;
+                        selectPatient.appendChild(el);
+                    }        
+              
+        
+                      selectPatient.style.width = '20%'
+                      form.appendChild(selectPatient);      
+          
+
+          
+
+          var addButton = document.createElement('button');       //Creates add patient button and callback
+              addButton.setAttribute = 'type', 'submit'
+              addButton.innerHTML = 'Aggiungi'
+              form.appendChild(addButton);
+
+          
+
+
+          form.addEventListener('submit', function(){
+                  var tab = document.createElement('table');    //Creates table of patients based on patientList[]
+                  tab.style.border = '2px solid black';
+                  form.appendChild(tab);
+
+                  let hName = tab.createTHead()
+                  let hHours = tab.createTHead()
+                  let hBill = tab.createTHead()
+                  hName.innerHTML = 'Nome paziente'
+                  hHours.innerHTML = 'Ore'
+                  hBill.innerHTML = 'Tariffa oraria'
+
+                  let rowx = tab.insertRow(0)
+                  let tdName = rowx.insertCell(0);
+                  let tdhours = rowx.insertCell(0);
+                  let tdbill = rowx.insertCell(0);
+
+                  
+                  
+
+                              for (i = 0; i < coll.length; i++) {            
+          
+                              content.style.maxHeight = content.scrollHeight + "px";
+              }                                     
+
+
+            
+
+          })          
+        
+          
+          
+      }  
+
+      var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        } 
+      });
+    }
+
+
+
+
+
+
+    }
+
+    function finalReckon(){
+      wipeMain()
+      operatorList.forEach(function (item){
+        
+
+
+      })
+
+    }
+
+
+</script>

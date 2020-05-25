@@ -1,0 +1,40 @@
+.collapContent {
+    padding: 0 18px;
+    display: none;
+    background-color: white;
+    overflow: hidden; 
+      
+    
+  }
+
+  .collapsible {
+    background-color:grey;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: solid 1px black;
+    margin-bottom: 2px;
+    text-align: left;
+    outline: none;
+    font-size: 25px;
+    margin-left: 0px;
+    
+  }
+  
+  .active, .collapsible:hover {
+    background-color: #555;
+  }
+
+  .collapsible:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: white;
+    float: right;
+    margin-left: 5px;
+    
+  }
+
+  .active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+  }

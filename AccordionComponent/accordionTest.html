@@ -1,0 +1,28 @@
+<meta charset="UTF-8">
+<html>
+
+    <head>
+        <link rel = 'stylesheet' type='text/css' href='accordion.css'>
+        <script src = 'AccordionComponent.js'></script>        
+    </head>
+
+    
+    <body>
+        <div id= 'div'></div>
+    </body>
+    
+</html>
+
+<script>
+let main = document.getElementById('div');
+
+createAccordion({
+    buttonLabel:'clicca qui', 
+    appendTarget: main, 
+    contentFunc: (targetAccordion) => {
+        let p = document.createElement('p');
+        p.innerHTML = 'AAAAAAAAAAAAAAAAAAHHH'
+        targetAccordion.appendChild(p)
+ }});
+
+</script>
