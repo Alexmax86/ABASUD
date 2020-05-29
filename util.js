@@ -22,14 +22,14 @@ function patientSelector({appendTo}){
       selectPatient.appendChild(el);
   }      
 
-  selectPatient.style.width = '20%'
+  
   appendTo.appendChild(selectPatient);
 
   this.selection = function(){
     let val = selectPatient.selectedIndex
     if (val == 0){return}
     if (val > 0){val -= 1}
-    console.log("returning " + patientList[val])
+    
     return patientList[val]
   }
 
@@ -38,6 +38,7 @@ function patientSelector({appendTo}){
 function billingRuleSelector({appendTo, operator}){
   let selector = document.createElement('select')      //////////////////SELECT BOX for patient
   selector.id = 'billingRuleSelector';
+  selector.className = "billingRuleSelector"
   
   var placeholder = document.createElement('option');       ////placeholder
   placeholder.textContent = '---'
@@ -48,20 +49,20 @@ function billingRuleSelector({appendTo, operator}){
       var opt = billingRules[x];
       var el = document.createElement("option");
       el.textContent = opt;
-      el.value = opt;
-      //console.log("Option is; " + )
+      el.value = opt;      
       if(operator.billingRule === el.value){el.selected = true}
       selector.appendChild(el);
   }      
 
-  selector.style.width = '20%'
+  
   appendTo.appendChild(selector);
+  
 
   this.selection = function(){
     let val = selector.selectedIndex
     if (val == 0){return}
     if (val > 0){val -= 1}
-    console.log("returning " + selector.value)
+   
     return selector.options[selector.selectedIndex].text
   }
 

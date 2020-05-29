@@ -3,6 +3,7 @@ function tableHours({appendTo, operator}) {
     this.firstTimeShown = false;
 
     let tab = document.createElement('table');              //Create table        
+    tab.style.display = 'none'
 
     this.header = function(){
         var header = tab.createTHead();
@@ -12,7 +13,7 @@ function tableHours({appendTo, operator}) {
         var billingH = row.insertCell(-1); billingH.innerHTML = "Tariffa h";
         var ruleH = row.insertCell(-1); ruleH.innerHTML = "Regola";        
         var cancel = row.insertCell(-1); 
-        // tab.style.display = 'none'
+        
         appendTo.appendChild(tab)   
     }    
 
@@ -23,27 +24,33 @@ function tableHours({appendTo, operator}) {
         let cellTar = newRow.insertCell(-1); cellTar.innerHTML = rate
         let cellRule = newRow.insertCell(-1); cellRule.innerHTML = rule
         var cellCancel = newRow.insertCell(-1); 
-        
+        cellCancel.style.textAlign = 'center';
+
         let cancelButton = document.createElement("button");
-        cancelButton.style.backgroundColor = "red"
+        cancelButton.style.backgroundColor = "red"        
         cancelButton.innerHTML = "X"
         cellCancel.appendChild(cancelButton)
         
         cancelButton.addEventListener('click', function(){
-            tab.deleteRow(newRow.rowIndex);
+            
+            //tab.deleteRow(newRow.rowIndex);
             operator.billedHours.splice(newRow.rowIndex - 1, 1)
+            self.refresh()  
         })
         
         
     }
 
-    this.refresh = function(){       
+    this.refresh = function(){     
+        
+        if (operator.billedHours.length > 0){tab.style.display = 'table'; console.log(operator.billedHours + "array pieno")}
+        else {tab.style.display = 'none'; console.log("array vuoTo, tabella invisibile")}
         while(tab.rows.length > 0) {
-            tab.deleteRow(0);
+            tab.deleteRow(0);            
             }
         this.header();
         operator.billedHours.forEach(function (element, index) {
-            self.addRow({patient: element.patient.name, hours: element.hours, rate: operator.rate, rule: element.rule})             //////aggiungere argomento rule
+            self.addRow({patient: element.patient.name, hours: element.hours, rate: element.rate, rule: element.rule})    
         })
     }
 
@@ -54,9 +61,7 @@ function tableHours({appendTo, operator}) {
     
     
    
-    //     operator.billedHours.forEach(function (element, index) {
-    //      self.addRow({paziente:operator.billedHours[index].patient, ore: operator.billedHours[index].hours, tariffa: '23'})
-    // });
+  
     
 }
     

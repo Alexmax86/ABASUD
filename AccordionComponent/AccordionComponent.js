@@ -10,6 +10,8 @@
 
 function createAccordion({buttonLabel, appendTarget, contentFunc}){
     let button = document.createElement('button'); button.innerHTML = buttonLabel
+    let state = false;
+
     
     let accordionContent = document.createElement('div');
  
@@ -22,7 +24,7 @@ function createAccordion({buttonLabel, appendTarget, contentFunc}){
         accordionContent.className = 'collapContent';
     
     contentFunc(accordionContent);          ////////callBack to function that defines accordion content
-
+    if (state === true){accordionContent.style.display = "block";}
     //////////////accordion expansion
     
     
@@ -31,8 +33,10 @@ function createAccordion({buttonLabel, appendTarget, contentFunc}){
       
       if (accordionContent.style.display === "block") {
         accordionContent.style.display = "none";
+        this.state = false
       } else {
         accordionContent.style.display = "block";
+        this.state = true;
     }}
   )
 
