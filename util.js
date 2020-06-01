@@ -13,6 +13,7 @@ function patientSelector({appendTo}){
   placeholder.textContent = '---'
   placeholder.value = "" 
   selectPatient.appendChild(placeholder)
+  
 
   for(var x = 0; x < patientList.length; x++) {             ////populate selectbox function
       var opt = patientList[x].name;
@@ -24,13 +25,46 @@ function patientSelector({appendTo}){
 
   
   appendTo.appendChild(selectPatient);
+  
 
   this.selection = function(){
     let val = selectPatient.selectedIndex
-    if (val == 0){return}
+    if (val == 0){return null}
     if (val > 0){val -= 1}
     
     return patientList[val]
+  }
+
+}
+
+function operatorSelector({appendTo}){
+  let selectOperator = document.createElement('select')      //////////////////SELECT BOX for patient
+  selectOperator.id = 'selectOperator';
+  
+  var placeholder = document.createElement('option');       ////placeholder
+  placeholder.textContent = '---'
+  placeholder.value = "" 
+  selectOperator.appendChild(placeholder)
+  
+
+  for(var x = 0; x < operatorList.length; x++) {             ////populate selectbox function
+      var opt = operatorList[x].name;
+      var el = document.createElement("option");
+      el.textContent = opt;
+      el.value = opt;
+      selectOperator.appendChild(el);
+  }      
+
+  
+  appendTo.appendChild(selectOperator);
+  
+
+  this.selection = function(){
+    let val = selectOperator.selectedIndex
+    if (val == 0){return null}
+    if (val > 0){val -= 1}
+    
+    return operatorList[val]
   }
 
 }
@@ -73,4 +107,6 @@ function interfaceManager(origin, destination, tempValue){
   this.hToolValues = []
   this.hToolTempCall = function(){return hToolValues} 
 }
+
+
 

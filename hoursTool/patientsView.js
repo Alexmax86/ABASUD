@@ -19,6 +19,12 @@ function patientsView(){
               let form = document.createElement('form');      
               form.setAttribute('autocomplete', 'off');
               targetAccordion.appendChild(form);
+
+              var patientLab = document.createElement("Label");                     /////////////TO UPDATE
+              patientLab.setAttribute("for", 'selectPatient');
+              patientLab.innerHTML = "Operatore: ";            
+              form.appendChild(patientLab);
+              let operatorSelector1 = new operatorSelector({appendTo: form});
   
               var oreLabel = document.createElement("Label");
               oreLabel.setAttribute("for", 'oreTextBox');
@@ -27,20 +33,11 @@ function patientsView(){
   
               let oreTextBox = document.createElement('input')
               oreTextBox.id = 'oreTextBox'
-              oreTextBox.setAttribute('type', 'text')
+              oreTextBox.setAttribute('type', 'number')
+              oreTextBox.setAttribute('min', "1")
               oreTextBox.style.width = '7%'
-              form.appendChild(oreTextBox);
-  
-              var patientLab = document.createElement("Label");
-              patientLab.setAttribute("for", 'selectPatient');
-              patientLab.innerHTML = "Paziente: ";
-              
-              form.appendChild(patientLab);
-             
-                   
-              
-              
-              let patientSelector1 = new patientSelector({appendTo: form});
+              form.appendChild(oreTextBox);          
+                           
   
               var tariffaLabel = document.createElement("Label");
               tariffaLabel.setAttribute("for", 'tariffaTextBox');
@@ -49,7 +46,8 @@ function patientsView(){
   
               let tariffaTextBox = document.createElement('input');
               tariffaTextBox.id = 'tariffaTextBox';
-              tariffaTextBox.setAttribute('type', 'text') 
+              tariffaTextBox.setAttribute('type', 'number') 
+              tariffaTextBox.setAttribute('min', "1")
               tariffaTextBox.value = operatorList[i].rate;           
               form.appendChild(tariffaTextBox);
   
@@ -77,13 +75,13 @@ function patientsView(){
   
               
   
-              let tabellaOraria = new tableHours({appendTo: targetAccordion, operator: operatorList[i]})
+              let tabellaOraria = new tabPatView({appendTo: targetAccordion, patient: patientList[i]})
               
   
               form.addEventListener('submit', function(event){
-                event.preventDefault();
-                              
-                operatorList[i].addBill({patient: patientSelector1.selection(), hours: oreTextBox.value, rate: tariffaTextBox.value, rule: billingSelector.selection()})
+                event.preventDefault();                
+                if (operatorSelector1.selection() == null || oreTextBox.value == "" || oreTextBox.value == "0" || tariffaTextBox.value == "" || tariffaTextBox.value == "0" || billingSelector.selection() === undefined) {alert("Completare tutti i campi del form"); return}              
+                database.addRecord({operator: operatorSelector1.selection().name, patient: patientList[i].name, hours: oreTextBox.value, rate: tariffaTextBox.value, rule: billingSelector.selection()})
                 tabellaOraria.refresh()
                 //tabellaOraria.addRow({paziente:patientList[val], ore:'22', tariffa:'13' })          
               })

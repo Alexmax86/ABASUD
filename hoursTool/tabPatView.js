@@ -1,4 +1,4 @@
-function tableHours({appendTo, operator}) {
+function tabPatView({appendTo, patient}) {
     var self = this;
     
     
@@ -9,7 +9,7 @@ function tableHours({appendTo, operator}) {
     this.header = function(){
         var header = tab.createTHead();
         var row = header.insertRow(0);
-        var nameH = row.insertCell(-1); nameH.innerHTML = "Nome paziente"; 
+        var nameH = row.insertCell(-1); nameH.innerHTML = "Nome operatore"; 
         var hoursH = row.insertCell(-1); hoursH.innerHTML = "Numero ore";
         var billingH = row.insertCell(-1); billingH.innerHTML = "Tariffa h";
         var ruleH = row.insertCell(-1); ruleH.innerHTML = "Regola";        
@@ -18,9 +18,9 @@ function tableHours({appendTo, operator}) {
         appendTo.appendChild(tab)   
     }    
 
-    this.addRow = function({patient, hours, rate, rule, id}) {        
+    this.addRow = function({operator, hours, rate, rule, id}) {        
         let newRow = tab.insertRow(-1);
-        let cellPaz = newRow.insertCell(-1); cellPaz.innerHTML = patient
+        let cellOp = newRow.insertCell(-1); cellOp.innerHTML = operator
         let cellOre = newRow.insertCell(-1); cellOre.innerHTML = hours
         let cellTar = newRow.insertCell(-1); cellTar.innerHTML = rate
         let cellRule = newRow.insertCell(-1); cellRule.innerHTML = rule
@@ -42,15 +42,15 @@ function tableHours({appendTo, operator}) {
     }
 
     this.refresh = function(){     
-        let operatorArr = database.retrieveOp(operator.name);
-        if (operatorArr.length > 0){tab.style.display = 'table'; console.log(operator.billedHours + "array pieno")}
+        let patientArr = database.retrievePat(patient.name);
+        if (patientArr.length > 0){tab.style.display = 'table';}
         else {tab.style.display = 'none'; console.log("array vuoTo, tabella invisibile")}
         while(tab.rows.length > 0) {
             tab.deleteRow(0);            
             }
         this.header();
-        operatorArr.forEach(function (element, index) {
-            self.addRow({patient: element.patient, hours: element.hours, rate: element.rate, rule: element.rule, id: element.id})    
+        patientArr.forEach(function (element, index) {
+            self.addRow({operator: element.operator, patient: element.patient, hours: element.hours, rate: element.rate, rule: element.rule, id: element.id})    
         })
     }
 
@@ -64,7 +64,3 @@ function tableHours({appendTo, operator}) {
   
     
 }
-    
-
-
-
