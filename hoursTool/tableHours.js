@@ -1,6 +1,6 @@
 function tableHours({appendTo, operator}) {
     var self = this;
-    this.firstTimeShown = false;
+    
 
     let tab = document.createElement('table');              //Create table        
     tab.style.display = 'none'
@@ -31,9 +31,8 @@ function tableHours({appendTo, operator}) {
         cancelButton.innerHTML = "X"
         cellCancel.appendChild(cancelButton)
         
-        cancelButton.addEventListener('click', function(){
+        cancelButton.addEventListener('click', function(){          
             
-            //tab.deleteRow(newRow.rowIndex);
             operator.billedHours.splice(newRow.rowIndex - 1, 1)
             self.refresh()  
         })

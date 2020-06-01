@@ -11,7 +11,7 @@ function addHours() {
   })
     
   for (let i = 0; i < operatorList.length; i++){  
-    createAccordion(
+    let acc = new createAccordion(
       {
         buttonLabel: operatorList[i].name,
         appendTarget: main,

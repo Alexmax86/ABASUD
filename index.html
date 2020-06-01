@@ -8,115 +8,12 @@
     <script src="hoursTool/tableHours.js"></script>
     <script src="hoursTool/patientsView.js"></script>
     <script src="AccordionComponent/AccordionComponent.js"></script>
+    <script src="hardcoded.js"></script>
     
     <link rel = 'stylesheet' type='text/css' href='AccordionComponent/accordion.css'>
+    <link rel = 'stylesheet' type='text/css' href='stylesheet.css'>
   </head>
-    <style>  
-                    .sidenav {
-                height: 100%; /* Full-height: remove this if you want "auto" height */
-                width: 260px; /* Set the width of the sidebar */
-                position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-                z-index: 1; /* Stay on top */
-                top: 0; /* Stay at the top */
-                left: 0;
-                background-color: #3A3F42; /* Black */
-                overflow-x: hidden; /* Disable horizontal scroll */
-                padding-top: 20px;
-              }
-
-              /* The navigation menu links */
-              .sidenav a {
-                padding: 6px 8px 6px 16px;
-                text-decoration: none;
-                font-size: 25px;
-                color: #818181;
-                display: block;
-                border: solid 2px black;
-                margin-top: 3px;
-                margin-bottom: 3px;
-              }
-
-              button{
-                border: 1px solid transparent;
-                background-color: DodgerBlue;
-                color: #fff;
-                cursor: pointer;
-                font-size: 90%;
-                margin-left: 1%;
-                
-                
-              }
-
-
-              /* When you mouse over the navigation links, change their color */
-              .sidenav a:hover {
-                color: #f1f1f1;
-              }
-
-              /* Style page content */
-              #main {
-                margin-left: 260px; /* Same as the width of the sidebar */
-                height: 100%;
-                font-size: 250%;
-                background-color:rgb(226, 240, 255);
-
-
-                
-              }
-
-              /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-              @media screen and (max-height: 450px) {
-                .sidenav {padding-top: 15px;}
-                .sidenav a {font-size: 18px;}
-              }
-
-              input[type=text], select {
-                width: 20%;
-                padding: 12px 20px;
-                margin: 8px 0;
-                display: inline-block;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-sizing: border-box;
-                font-size: 70%;
-              }
-
-              select{
-               width: 15%;
-                
-               
-              }
-
-              table {
-                font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-              }
-
-              td, th {
-                border: 1px solid #ddd;
-                padding: 8px;
-                
-              }
-
-              .floatButton {
-                          background-color : #31B0D5;
-                          color: white;
-                          padding: 10px 20px;
-                          border-radius: 4px;
-                          border-color: #46b8da;
-                          position: fixed;
-                          bottom: 10px;
-                          right: 5px;
-                          
-                        }
-
-              
-
-              
-     
-    </style>
-  
+   
   
   <body>
     <div class="sidenav">
@@ -138,7 +35,7 @@
 </html>
 
 <script>
-
+    let database = new db;
     let operatorList = []
     let patientList = [{name: 'Tizio'}, {name: 'Caio'}, {name: 'Sempronio'}]
     let billingRules = ['full', 'split']
@@ -152,6 +49,8 @@
         this.addBill = function({patient, hours, rate, rule}){
           this.billedHours.push({patient: patient, hours: hours, rate: rate, rule: rule})
         }
+    
+    
 
         operatorList.push(this);
 
@@ -163,23 +62,9 @@
         this.name = name;
         //this.hours = {}
     }
-    //////////////////////////////////////////////////////////////////////////////////////HARDCODED VALUES
-    let Ciccio = new Operator ('Ciccio');
-    Ciccio.billingRule = 'full'
-    let second = new Operator ('Chiara');
-    let third = new Operator ('Adriana');
-    let fourth = new Operator ('Giuvannedda');
-    let fifth = new Operator ('Gioacchino');
-    
-    let firstPatient = new Patient('Aldo');
-    let secondPatient = new Patient('Peppe');    
-    
-    //Ciccio.addBill({patient: patientList[0], hours: '22'})   
 
+    hardcoded();
     
-
- 
-
     ////////////////////////////////////////////////////////////////////////////////////////USER INTERFACE////////////////////////////////////////////////////////////////////////////////
     var mainPage = document.getElementById('main');     
 

@@ -1,55 +1,78 @@
 <html>
     <body>
-
+      
     </body>
 </html>
 
 <script>
-    if (confirm('Are you sure you want to save this thing into the database?')) {
-  // Save it!
-  console.log('Thing was saved to the database.');
-} else {
-  // Do nothing!
-  console.log('Thing was not saved to the database.');
-}
-    function billingRuleSelector({appendTo}){
-  let selector = document.createElement('select')      //////////////////SELECT BOX for patient
-  selector.id = 'billingRuleSelector';
-  
-  var placeholder = document.createElement('option');       ////placeholder
-  placeholder.textContent = '---'
-  placeholder.value = "" 
-  selector.appendChild(placeholder)
+let btn = document.createElement("button");
+btn.innerHTML = "asd"
+document.body.appendChild(btn);
 
-  for(var x = 0; x < billingRules.length; x++) {             ////populate selectbox function
-      var opt = billingRules[x];
-      var el = document.createElement("option");
-      el.textContent = opt;
-      el.value = opt;
-      selector.appendChild(el);
-  }      
-
-  selector.style.width = '20%'
-  appendTo.appendChild(selector);
-
-  this.selection = function(){
-    let val = selector.selectedIndex
-    if (val == 0){return}
-    if (val > 0){val -= 1}
-    console.log("returning " + selector.value)
-    return selector.options[selector.selectedIndex].text
-  }
-
-}
-
-let billingRules = ["full", "split"]
-let selector = new billingRuleSelector({appendTo: document.body})
-let button = document.createElement("button");
-document.body.appendChild(button)
-button.innerHTML = "aaaaaaaaahhh"
-button.addEventListener('click', function(){
-    console.log("call")
-    console.log(selector.selection())
+btn.addEventListener("click", function(){
+  console.log(Date.now())
 })
 
+
+
+
+let d = new db;
+
+d.addRecord({operator:"Ciccio", patient: "Tizio", hours: 10, rate: 20, rule:"full"})
+d.addRecord({operator:"Chiara", patient: "Caio", hours: 10, rate: 20, rule:"full"})
+d.addRecord({operator:"Chiara", patient: "Caio", hours: 15, rate: 20, rule:"full"})
+d.addRecord({operator:"Ciccio", patient: "Sempronio", hours: 10, rate: 20, rule:"full"})
+
+
+
+function db(){
+    this.db = []
+    this.addRecord =  function({operator, patient, hours, rate, rule}){
+        this.db.push({operator: operator, patient: patient, hours: hours, rate: rate, rule: rule, id: Date.now()})}
+    
+    
+    this.retrieveOp = function(operator){
+      let retrieveArr = [];      
+      for (let i = 0; i < this.db.length; i++){
+        console.log ("Confronting " + this.db[i].operator + " with " + operator)
+        if (this.db[i].operator === operator){
+          
+          retrieveArr.push(this.db[i]);
+        }        
+      }
+      return retrieveArr;
+    }
+
+    this.retrievePat = function(patient){
+      let retrieveArr = [];      
+      for (let i = 0; i < this.db.length; i++){
+        
+        if (this.db[i].patient === patient){
+          
+          retrieveArr.push(this.db[i]);
+        }        
+      }
+      return retrieveArr;
+    }
+
+    this.retrieve = function(searchString){
+      for (let [key, value] of Object.entries(searchString)) {
+    
+      }
+      
+      
+    }
+
+    this.deleteRecord = function(id){
+
+      
+      for (let i = 0; i < this.db.length; i++){
+        
+        if (this.db[i].id === id){
+             this.db.splice(i, 1)       
+        }        
+      }
+      
+    }
+  }  
 </script>

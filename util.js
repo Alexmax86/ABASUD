@@ -68,3 +68,9 @@ function billingRuleSelector({appendTo, operator}){
 
 }
 
+function interfaceManager(origin, destination, tempValue){
+
+  this.hToolValues = []
+  this.hToolTempCall = function(){return hToolValues} 
+}
+
