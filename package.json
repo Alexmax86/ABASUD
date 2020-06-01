@@ -1,0 +1,22 @@
+{
+  "name": "abasudapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alexmax86/ABASUD.git"
+  },
+  "author": "Alessio Mazzei",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alexmax86/ABASUD/issues"
+  },
+  "homepage": "https://github.com/Alexmax86/ABASUD#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
