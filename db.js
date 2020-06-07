@@ -48,4 +48,31 @@ function db(){
     }
   }  
 
+function dbExpenses(){
+  this.db = [];
+  this.addRecord = function({operator, sum, reason}){
+    this.db.push({operator: operator, sum: sum, reason: reason, id: Date.now()})}
+  
+  this.retrieve = function(operator){
+    let retrieveArr = [];      
+      for (let i = 0; i < this.db.length; i++){        
+        if (this.db[i].operator === operator){          
+          retrieveArr.push(this.db[i]);
+        }        
+      }
+      return retrieveArr;
+  }
+  this.deleteRecord = function(id){      
+    for (let i = 0; i < this.db.length; i++){      
+      if (this.db[i].id === id){
+           this.db.splice(i, 1)       
+      }        
+    }
+    
+  }
+
+}
+
+
+
   
