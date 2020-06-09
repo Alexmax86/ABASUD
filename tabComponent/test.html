@@ -1,0 +1,97 @@
+<html>
+    <style>
+        table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  td {
+    border: 2px solid black;
+    padding: 8px;
+    text-align: center;
+    
+  }
+
+  .tHeader {
+    border: 2px solid black;
+    text-align: center;
+    padding: 8px;
+    background-color: #31B0D5;
+    font-weight: bold;
+  }
+    </style>
+   <body>
+
+   </body> 
+</html>
+<script>
+    let tab = new tabComponent({
+        appendTo: document.body,
+        collection: undefined,
+        headArr: ["NOME", "COGNOME", "NUMERO"]
+    });
+    tab.header();
+    tab.addRow([{id: 332, type: 'text', text: 'prova', onclick: function(cell, id){cell.innerHTML = id} }, {type: 'text', text: 'aaaah'}, {type: 'cancelButton'}], 32);
+
+
+    function tabComponent({appendTo, collection, headArr}){
+        let self = this
+        this.headArr = headArr;
+        
+        let tab = document.createElement('table');  
+        appendTo.appendChild(tab)
+        //tab.style.display = 'none'
+
+        this.header = function(){
+            var header = tab.createTHead();
+            var row = header.insertRow(0);
+                for (let element of self.headArr){
+                    var headCell = row.insertCell(-1); 
+                    headCell.innerHTML = element; 
+                    headCell.className = 'tHeader'
+                }
+
+            appendTo.appendChild(tab)   
+            }
+// Addrow accetta un array di oggetti. Ogni oggetto corrisponde ad una casella.
+// Parametro id: stabilisce l'id come referenza ad un db
+// Parametro type: 'text' indica una casella di testo 
+// Parametro cancelButton: crea cancelbutton, la callback si stabilisce con il parametro onclick
+// Parametro onclick(cell, id): esegue la funzione di callback al click. L'argomento cell espone referenza alla cella, l'argomento id espone l'id della riga
+        this.addRow = function(arr) {                   //accetta array di oggetti     
+            let tBody = tab.createTBody();
+            let row = tBody.insertRow(-1);
+            
+            for (let element of arr){
+                let cell = row.insertCell(-1);
+                if (element.type == 'text'){            //type 'text'
+                    cell.innerHTML = element.text;
+                    
+                    
+                }
+                if (element.type == 'cancelButton'){
+                    let cancelButton = document.createElement("button");
+                    cancelButton.style.backgroundColor = "red"        
+                    cancelButton.innerHTML = "X"
+                    cell.appendChild(cancelButton)
+
+                }
+                if (element.hasOwnProperty('onclick')){
+                        cell.addEventListener('click', () => {element.onclick(cell, element.id)})
+                        
+                    }
+                
+
+            }
+            
+            
+            // cancelButton.addEventListener('click', function(){          
+                
+            //     database.deleteRecord(id)
+            //     self.refresh()  
+            // })      
+        }
+    }
+</script>

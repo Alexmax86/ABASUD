@@ -9,17 +9,18 @@ function tableHours({appendTo, operator}) {
     this.header = function(){
         var header = tab.createTHead();
         var row = header.insertRow(0);
-        var nameH = row.insertCell(-1); nameH.innerHTML = "Nome paziente"; 
-        var hoursH = row.insertCell(-1); hoursH.innerHTML = "Numero ore";
-        var billingH = row.insertCell(-1); billingH.innerHTML = "Tariffa h";
-        var ruleH = row.insertCell(-1); ruleH.innerHTML = "Regola";        
-        var cancel = row.insertCell(-1); 
+        var nameH = row.insertCell(-1); nameH.innerHTML = "NOME PAZIENTE"; nameH.className = 'tHeader'
+        var hoursH = row.insertCell(-1); hoursH.innerHTML = "NUMERO ORE"; hoursH.className = 'tHeader';
+        var billingH = row.insertCell(-1); billingH.innerHTML = "TARIFFA H"; billingH.className = 'tHeader';
+        var ruleH = row.insertCell(-1); ruleH.innerHTML = "REGOLA"; ruleH.className = 'tHeader';
+        var cancel = row.insertCell(-1); cancel.className = 'tHeader';
         
         appendTo.appendChild(tab)   
     }    
 
     this.addRow = function({patient, hours, rate, rule, id}) {        
-        let newRow = tab.insertRow(-1);
+        let tBody = tab.createTBody();
+        let newRow = tBody.insertRow(-1);
         let cellPaz = newRow.insertCell(-1); cellPaz.innerHTML = patient
         let cellOre = newRow.insertCell(-1); cellOre.innerHTML = hours
         let cellTar = newRow.insertCell(-1); cellTar.innerHTML = rate

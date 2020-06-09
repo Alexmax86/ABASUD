@@ -50,8 +50,8 @@ function db(){
 
 function dbExpenses(){
   this.db = [];
-  this.addRecord = function({operator, sum, reason}){
-    this.db.push({operator: operator, sum: sum, reason: reason, id: Date.now()})}
+  this.addRecord = function({operator, type,  sum, reason}){
+    this.db.push({operator: operator, type: type, sum: sum, reason: reason, id: Date.now()})}
   
   this.retrieve = function(operator){
     let retrieveArr = [];      

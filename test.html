@@ -1,78 +1,47 @@
 <html>
+    <style>
+      table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    /*border-collapse: collapse;*/
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  th {
+    border-color: 3px solid red;
+    background-color: red;
+    padding: 8px;
+    
+  } 
+
+  td {
+    border: 2px solid black;
+    padding: 8px;       
+  }
+
+    
+  </style>
     <body>
-      
+      <table>
+        
     </body>
 </html>
 
 <script>
-let btn = document.createElement("button");
-btn.innerHTML = "asd"
-document.body.appendChild(btn);
-
-btn.addEventListener("click", function(){
-  console.log(Date.now())
-})
+let tab = document.createElement("table");
+document.body.appendChild(tab);
 
 
+let row = tab.insertRow(0);
+let thead1 = row.createThead();
 
+thead1.innerHTML = "Head row"
 
-let d = new db;
-
-d.addRecord({operator:"Ciccio", patient: "Tizio", hours: 10, rate: 20, rule:"full"})
-d.addRecord({operator:"Chiara", patient: "Caio", hours: 10, rate: 20, rule:"full"})
-d.addRecord({operator:"Chiara", patient: "Caio", hours: 15, rate: 20, rule:"full"})
-d.addRecord({operator:"Ciccio", patient: "Sempronio", hours: 10, rate: 20, rule:"full"})
+let tbody = tab.createTBody()
+let brow = tbody.insertRow(0)
+let cell2 = brow.insertCell(0);
+cell2.innerHTML = "Tbody row"
 
 
 
-function db(){
-    this.db = []
-    this.addRecord =  function({operator, patient, hours, rate, rule}){
-        this.db.push({operator: operator, patient: patient, hours: hours, rate: rate, rule: rule, id: Date.now()})}
-    
-    
-    this.retrieveOp = function(operator){
-      let retrieveArr = [];      
-      for (let i = 0; i < this.db.length; i++){
-        console.log ("Confronting " + this.db[i].operator + " with " + operator)
-        if (this.db[i].operator === operator){
-          
-          retrieveArr.push(this.db[i]);
-        }        
-      }
-      return retrieveArr;
-    }
-
-    this.retrievePat = function(patient){
-      let retrieveArr = [];      
-      for (let i = 0; i < this.db.length; i++){
-        
-        if (this.db[i].patient === patient){
-          
-          retrieveArr.push(this.db[i]);
-        }        
-      }
-      return retrieveArr;
-    }
-
-    this.retrieve = function(searchString){
-      for (let [key, value] of Object.entries(searchString)) {
-    
-      }
-      
-      
-    }
-
-    this.deleteRecord = function(id){
-
-      
-      for (let i = 0; i < this.db.length; i++){
-        
-        if (this.db[i].id === id){
-             this.db.splice(i, 1)       
-        }        
-      }
-      
-    }
-  }  
 </script>

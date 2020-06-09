@@ -28,7 +28,7 @@ body {
 
   button{
     border: 1px solid transparent;
-    background-color: DodgerBlue;
+    background-color: 31B0D5;
     color: #fff;
     cursor: pointer;
     font-size: 90%;
@@ -91,13 +91,16 @@ body {
   td {
     border: 2px solid black;
     padding: 8px;
+    text-align: center;
     
   }
 
-  th {
-    border: 3px solid black;
+  .tHeader {
+    border: 2px solid black;
+    text-align: center;
     padding: 8px;
-    
+    background-color: #31B0D5;
+    font-weight: bold;
   }
 
   .floatButton {
